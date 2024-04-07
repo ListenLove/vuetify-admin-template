@@ -16,8 +16,9 @@ import { setupRouter } from "./router"
 
 const app = createApp(App)
 
-setupRouter(app)
+await setupRouter(app)
 
 registerPlugins(app)
+
 
 app.mount("#app")

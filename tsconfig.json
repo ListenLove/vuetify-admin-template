@@ -8,6 +8,7 @@
     "moduleResolution": "node",
     "paths": {
       "@/*": ["src/*"],
+      "~/*": ["./*"],
     },
     "resolveJsonModule": true,
     "types": [
@@ -28,7 +29,6 @@
     "./src/typed-router.d.ts",
     "src/**/*.ts",
     "src/**/*.vue",
-    // "vue-shims.d.ts"
   ],
   "exclude": ["dist", "node_modules", "cypress"],
   "references": [{ "path": "./tsconfig.node.json" }],

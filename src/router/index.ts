@@ -1,38 +1,25 @@
-/* 全局路由 */
 import { App } from 'vue'
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-const Layout = () => import('@/layout/index.vue')
-const BasicRoutes: RouteRecordRaw[] = [
-  {
-    path: '/',
-    name: 'Home',
-    component: Layout,
-    children: [
-      {
-        path: '',
-        name: 'Home',
-        component: () => import('@/views/Home/index.vue'),
-      },
-    ],
-  },
-  {
-    path: '/404',
-    name: '404',
-    component: () => import('@/views/NotFound.vue'),
-  },
-  {
-    path: '/:pathMatch(.*)*',
-    redirect: '/404',
-  },
-]
+import { createRouter, createWebHashHistory } from 'vue-router'
+import { asyncRoutes, basicRoutes } from './routes'
+
 
 const router = createRouter({
-  history: createWebHistory(),
-  routes: BasicRoutes,
+  history: createWebHashHistory(),
+  routes: basicRoutes,
+  scrollBehavior: () => ({ left: 0, top: 0 }),
 })
 
-// export default router
-
-export function setupRouter(app: App) {
+export async function setupRouter(app: App) {
+  await generateDynamicRoute()
   app.use(router)
 }
+
+// 生成动态路由
+async function generateDynamicRoute() {
+  // 一般是请求后端接口获取路由，这里不做演示
+  // 拿到全部路由后，添加到路由表中
+  asyncRoutes.concat(...basicRoutes).forEach((route) => {
+    router.hasRoute(route.name) || router.addRoute(route) // 避免重复添加
+  })
+}
+
