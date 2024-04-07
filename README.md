@@ -79,3 +79,10 @@ This project is built with [Vuetify](https://vuetifyjs.com/en/), a UI Library wi
 [MIT](http://opensource.org/licenses/MIT)
 
 Copyright (c) 2016-present Vuetify, LLC
+
+
+## 目标
+- [ ] 一个简洁、易用的后台管理平台框架。
+- [ ] 响应式布局。
+- [ ] 最少支持黑暗、浅色两种主题。
+- [ ] 想到了再补充。
