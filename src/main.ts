@@ -12,8 +12,11 @@ import App from "./App.vue"
 
 // Composables
 import { createApp } from "vue"
+import { setupRouter } from "./router"
 
 const app = createApp(App)
+
+setupRouter(app)
 
 registerPlugins(app)
 

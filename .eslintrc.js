@@ -31,5 +31,8 @@ module.exports = {
       exports: 'always-multiline',
       functions: 'ignore',
     }],
+    'vue/multi-word-component-names': ['error', {
+      'ignores': ['index'],
+    }],
   },
 }

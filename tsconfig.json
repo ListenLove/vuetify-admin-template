@@ -26,8 +26,9 @@
   },
   "include": [
     "./src/typed-router.d.ts",
-    "./**/*.ts",
-    "./**/*.vue"
+    "src/**/*.ts",
+    "src/**/*.vue",
+    // "vue-shims.d.ts"
   ],
   "exclude": ["dist", "node_modules", "cypress"],
   "references": [{ "path": "./tsconfig.node.json" }],
