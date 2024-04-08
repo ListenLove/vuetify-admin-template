@@ -34,6 +34,7 @@
           active-class="text-blue-accent-2"
           v-bind="Object.assign({}, routeItem.props||{})"
           :to="{name: routeItem.value}"
+          variant="elevated"
           exact
         />
         <!-- 路由有子节点 -->
@@ -43,11 +44,32 @@
         >
           <template #activator="{ props }">
             <v-list-item
+              v-if="!rail"
               v-bind="Object.assign({}, props, routeItem.props || {})"
               :title="routeItem.props?.title || routeItem.value"
               :value="routeItem.value"
               variant="elevated"
             />
+            <v-menu
+              v-else
+              open-on-hover
+              location="end"
+              min-width="120"
+            >
+              <template #activator="{ props: pps }">
+                <v-list-item
+                  v-bind="Object.assign({}, pps, routeItem.props || {})"
+                  :title="routeItem.props?.title || routeItem.value"
+                  :value="routeItem.value"
+                  variant="elevated"
+                />
+              </template>
+              <v-list
+                :items="routeItem.children"
+                style="--indent-padding: 1em"
+                active-class="text-blue-accent-2"
+              />
+            </v-menu>
           </template>
           <v-list
             :items="routeItem.children"
@@ -124,6 +146,7 @@ const computedOpened = computed(() => {
       })
     }
   })
+  if(rail.value) return []
   return opened
 })
 

@@ -1,6 +1,9 @@
 <template>
   <v-layout class="rounded rounded-md">
-    <side-navigation />
+    <side-navigation
+      :rail="mdAndDown"
+      :permanent="!xs"
+    />
     <v-app-bar title="Application bar" />
 
     <v-main
@@ -14,6 +17,9 @@
 
 <script setup lang="ts">
 import SideNavigation from '@/layouts/SideNavigation.vue'
+import { useDisplay } from 'vuetify/lib/framework.mjs'
+const {mdAndDown, xs} = useDisplay()  // 中型屏及以下将侧边栏收缩，在移动端屏上完全侧边栏隐藏
+
 </script>
 
 <style scoped>
