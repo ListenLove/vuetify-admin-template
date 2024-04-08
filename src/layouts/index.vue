@@ -1,11 +1,6 @@
 <template>
   <v-layout class="rounded rounded-md">
-    <v-navigation-drawer>
-      <v-list>
-        <v-list-item title="Navigation drawer" />
-      </v-list>
-    </v-navigation-drawer>
-
+    <side-navigation />
     <v-app-bar title="Application bar" />
 
     <v-main
@@ -18,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-
+import SideNavigation from '@/layouts/SideNavigation.vue'
 </script>
 
 <style scoped>
