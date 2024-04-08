@@ -1,5 +1,25 @@
 <template>
-  <v-navigation-drawer>
+  <v-navigation-drawer
+    v-bind="$attrs"
+    :rail="computedRail"
+  >
+    <v-list-item
+      class="pt-3 pb-2"
+    >
+      <template #prepend>
+        <v-btn
+          size="sm"
+          :icon="computedRail ?'mdi-format-align-right':'mdi-format-align-left'"
+          variant="text"
+          @click="toggleSideNavBar"
+        />
+      </template>
+      <h2
+        class="text-blue-accent-2 text-truncate text-center"
+      >
+        Vuetify Admin
+      </h2>
+    </v-list-item>
     <v-list>
       <template
         v-for="route in computedRoutes"
@@ -36,6 +56,7 @@
 
 <script setup lang="ts">
 import { asyncRoutes } from '@/router/routes'
+import { computed } from 'vue'
 
 // 路由处理，在这里对路由进行过滤、排序处理
 const computedRoutes: typeof asyncRoutes = []
@@ -51,6 +72,20 @@ computedRoutes.sort((a, b) => {
   const b_order = b.props?.order || 0
   return b_order - a_order
 })
+
+// 伸缩侧边导航栏
+const rail = defineModel('rail', {
+  type: Boolean,
+  default: false,
+})
+
+const computedRail = computed(() => {
+  return rail.value
+})
+// 点击伸缩侧边导航栏
+function toggleSideNavBar() {
+  rail.value = !rail.value
+}
 </script>
 <style scoped lang="scss">
 :deep(.v-list-item .v-list-item__prepend) {
