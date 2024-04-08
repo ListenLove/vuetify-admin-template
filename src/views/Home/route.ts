@@ -4,10 +4,11 @@ export default {
   path: '/',
   value: 'Home',
   component: () => import('@/layouts/index.vue'),
+  redirect: '/home',
   children: [
     {
-      path: '',
-      value: 'Home',
+      path: 'home',
+      value: 'Home:home',
       component: () => import('@/views/Home/index.vue'),
       props: {
         title: 'home',
@@ -15,7 +16,7 @@ export default {
     },
     {
       path: 'test',
-      value: 'test',
+      value: 'Home:test',
       component: () => import('@/views/Home/test.vue'),
       props: {
         title: 'test',

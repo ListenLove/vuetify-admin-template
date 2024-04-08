@@ -19,6 +19,11 @@ async function generateDynamicRoute() {
   // 一般是请求后端接口获取路由，这里不做演示
   // 拿到全部路由后，添加到路由表中
   asyncRoutes.concat(...basicRoutes).forEach((route) => {
+    // route中还要设置一下 route.name = route.value
+    route.name = route.value
+    route.children?.forEach((childRoute) => {
+      childRoute.name = childRoute.value
+    })
     router.hasRoute(route.value) || router.addRoute(route) // 避免重复添加
   })
 }

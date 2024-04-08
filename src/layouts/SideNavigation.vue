@@ -8,7 +8,8 @@
     >
       <template #prepend>
         <v-btn
-          size="sm"
+          size="medium"
+          rounded="0"
           :icon="computedRail ?'mdi-format-align-right':'mdi-format-align-left'"
           variant="text"
           @click="toggleSideNavBar"
@@ -20,35 +21,40 @@
         Vuetify Admin
       </h2>
     </v-list-item>
-    <v-list>
+    <v-list :opened="computedOpened">
       <template
-        v-for="route in computedRoutes"
-        :key="route.name"
+        v-for="routeItem in computedRoutes"
+        :key="routeItem.name"
       >
+        <!-- 没有子节点 -->
+        <v-list-item
+          v-if="!routeItem.children || !routeItem.children.length"
+          :title="routeItem.props?.title || routeItem.value"
+          :value="routeItem.value"
+          active-class="text-blue-accent-2"
+          v-bind="Object.assign({}, routeItem.props||{})"
+          :to="{name: routeItem.value}"
+          exact
+        />
         <!-- 路由有子节点 -->
         <v-list-group
-          v-if="route.children?.length"
-          :value="route.name"
+          v-else
+          :value="routeItem.value"
         >
           <template #activator="{ props }">
             <v-list-item
-              v-bind="Object.assign({}, props, route.props || {})"
-              :title="route.props?.title || route.value"
-              :value="route.value"
-              :variant="'elevated'"
+              v-bind="Object.assign({}, props, routeItem.props || {})"
+              :title="routeItem.props?.title || routeItem.value"
+              :value="routeItem.value"
+              variant="elevated"
             />
           </template>
           <v-list
-            :items="route.children"
+            :items="routeItem.children"
             style="--indent-padding: 1em"
+            active-class="text-blue-accent-2"
           />
         </v-list-group>
-        <!-- 没有子节点 -->
-        <v-list-item
-          v-else
-          :title="route.props?.title || route.value"
-          :value="route.value"
-        />
       </template>
     </v-list>
   </v-navigation-drawer>
@@ -57,15 +63,26 @@
 <script setup lang="ts">
 import { asyncRoutes } from '@/router/routes'
 import { computed } from 'vue'
+import { RouteRecordName } from 'vue-router'
+import { useRoute } from 'vue-router'
 
 // 路由处理，在这里对路由进行过滤、排序处理
 const computedRoutes: typeof asyncRoutes = []
 // 过滤处理
 asyncRoutes.forEach(route => {
   if (!route.isHidden) {
+    // 给每个路由及其子路有添加to属性，便于选定后跳转
+    // route.props = Object.assign({}, route.props, {exact: true})
+    route.children && route.children.forEach((childRoute) => {
+      if (childRoute.isHidden) {
+        return
+      }
+      childRoute.props = Object.assign({}, childRoute.props, {to: {name: childRoute.value, exact: true}})
+    })
     computedRoutes.push(route)
   }
 })
+
 // 排序处理
 computedRoutes.sort((a, b) => {
   const a_order = a.props?.order || 0
@@ -86,6 +103,30 @@ const computedRail = computed(() => {
 function toggleSideNavBar() {
   rail.value = !rail.value
 }
+// 路由匹配时展开列表
+const route = useRoute()
+// 打开的路由表
+const computedOpened = computed(() => {
+  // 在路由中查找和匹配
+  const opened: (RouteRecordName | undefined)[] = []
+  computedRoutes.forEach(computedRouteItem => {
+    // 匹配到的一级路由
+    if (computedRouteItem.name === route.name && route.name) {
+      opened.push(computedRouteItem.name)
+    }
+    // 匹配到的二级路由
+    if (computedRouteItem.children && computedRouteItem.children.length > 0) {
+      computedRouteItem.children.forEach(r => {
+        if (r.name === route.name) {
+          !opened.includes(r.name) && opened.push(r.name)
+          !opened.includes(computedRouteItem.name) && opened.push(computedRouteItem.name)
+        }
+      })
+    }
+  })
+  return opened
+})
+
 </script>
 <style scoped lang="scss">
 :deep(.v-list-item .v-list-item__prepend) {
