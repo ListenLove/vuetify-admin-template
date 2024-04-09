@@ -15,5 +15,14 @@ import { createVuetify } from 'vuetify'
 export default createVuetify({
   theme: {
     defaultTheme: 'light',
+    themes: {
+      light: {
+        colors: {
+          primary: '#00ADB5', // 修改主题色
+          secondary: '#46CDCF',
+          'on-surface': '#222831',  // 修改主要字体颜色
+        },
+      },
+    },
   },
 })

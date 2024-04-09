@@ -16,7 +16,7 @@
         />
       </template>
       <h2
-        class="text-blue-accent-2 text-truncate text-center"
+        class="text-truncate text-center"
       >
         Vuetify Admin
       </h2>
@@ -31,7 +31,6 @@
           v-if="!routeItem.children || !routeItem.children.length"
           :title="routeItem.props?.title || routeItem.value"
           :value="routeItem.value"
-          active-class="text-blue-accent-2"
           v-bind="Object.assign({}, routeItem.props||{})"
           :to="{name: routeItem.value}"
           variant="elevated"
@@ -67,14 +66,12 @@
               <v-list
                 :items="routeItem.children"
                 style="--indent-padding: 1em"
-                active-class="text-blue-accent-2"
               />
             </v-menu>
           </template>
           <v-list
             :items="routeItem.children"
             style="--indent-padding: 1em"
-            active-class="text-blue-accent-2"
           />
         </v-list-group>
       </template>

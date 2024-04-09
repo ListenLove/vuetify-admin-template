@@ -13,7 +13,7 @@ interface Prop {
 }
 
 interface RouteItem extends RouteRecordRaw {
-  // name: string
+  name?: string
   value: string // 这里的value起到name的作用
   path: string
   redirect?: string
