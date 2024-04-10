@@ -1,4 +1,4 @@
-import { RouteItem } from '~/types/router'
+import { RouteItem } from '~/types/typed-router'
 
 export default {
   path: '/',

@@ -1,4 +1,4 @@
-import { RouteModule, RoutesType} from '~/types/router'
+import { RouteModule, RoutesType} from '~/types/typed-router'
 const basicRoutes: RoutesType = [
   {
     path: '/404',
