@@ -1,28 +1,25 @@
 import { RouteRecordRaw } from 'vue-router'
 
-interface Prop {
-  title: string
+interface Meta {
+  title?: string
   icon?: string
   customIcon?: string
   order?: number
+  role?: Array<string>
   requireAuth?: boolean
-  prependIcon?: string  // vuetify内置Icon名称
-  to?: string | {name:string}
-
-  // permission?: string[]  // 权限
 }
 
-interface RouteItem extends RouteRecordRaw {
+interface RouteItem {
   name?: string
-  value: string // 这里的value起到name的作用
+  value: string
   path: string
   redirect?: string
   isHidden?: boolean
-  props?: Prop,
+  meta?: Meta,
   children?: RoutesType
 }
 
-type RouteType = RouteItem & RouteRecordRaw
+type RouteType =  RouteItem & RouteRecordRaw
 
 type RoutesType = Array<RouteType>
 

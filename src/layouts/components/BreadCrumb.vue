@@ -19,12 +19,10 @@ const paths = computed(() => {
   return route.matched.map((matchedRoute, index) => {
     return {
       href: matchedRoute.name as unknown,
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      title: matchedRoute.props?.default?.title || matchedRoute.name,
-      disabled: index === route.matched.length -1,
+      title: matchedRoute.meta.title || matchedRoute.name,
+      disabled: index === route.matched.length - 1,
     }
-  }) as Path[]
+    }) as unknown as Path[]
 })
 
 </script>

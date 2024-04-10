@@ -29,9 +29,9 @@
         <!-- 没有子节点 -->
         <v-list-item
           v-if="!routeItem.children || !routeItem.children.length"
-          :title="routeItem.props?.title || routeItem.value"
+          :title="routeItem.meta?.title || routeItem.value"
           :value="routeItem.value"
-          v-bind="Object.assign({}, routeItem.props||{})"
+          v-bind="Object.assign({}, routeItem.meta||{})"
           :to="{name: routeItem.value}"
           variant="elevated"
           exact
@@ -44,8 +44,8 @@
           <template #activator="{ props }">
             <v-list-item
               v-if="!rail"
-              v-bind="Object.assign({}, props, routeItem.props || {})"
-              :title="routeItem.props?.title || routeItem.value"
+              v-bind="Object.assign({}, props, routeItem.meta || {})"
+              :title="routeItem.meta?.title || routeItem.value"
               :value="routeItem.value"
               variant="elevated"
             />
@@ -55,10 +55,10 @@
               location="end"
               min-width="120"
             >
-              <template #activator="{ props: pps }">
+              <template #activator="{ props:pps }">
                 <v-list-item
-                  v-bind="Object.assign({}, pps, routeItem.props || {})"
-                  :title="routeItem.props?.title || routeItem.value"
+                  v-bind="Object.assign({}, pps, routeItem.meta || {})"
+                  :title="routeItem.meta?.title || routeItem.value"
                   :value="routeItem.value"
                   variant="elevated"
                 />
@@ -96,7 +96,7 @@ asyncRoutes.forEach(route => {
       if (childRoute.isHidden) {
         return
       }
-      childRoute.props = Object.assign({}, childRoute.props, {to: {name: childRoute.value, exact: true}})
+      childRoute.props = Object.assign({}, childRoute.meta, {to: {name: childRoute.value, exact: true}})
     })
     computedRoutes.push(route)
   }
@@ -104,8 +104,8 @@ asyncRoutes.forEach(route => {
 
 // 排序处理
 computedRoutes.sort((a, b) => {
-  const a_order = a.props?.order || 0
-  const b_order = b.props?.order || 0
+  const a_order = a.meta?.order || 0
+  const b_order = b.meta?.order || 0
   return b_order - a_order
 })
 

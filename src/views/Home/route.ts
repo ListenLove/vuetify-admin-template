@@ -10,7 +10,7 @@ export default {
       path: 'home',
       value: 'Home:home',
       component: () => import('@/views/Home/index.vue'),
-      props: {
+      meta: {
         title: 'home',
       },
     },
@@ -18,12 +18,12 @@ export default {
       path: 'test',
       value: 'Home:test',
       component: () => import('@/views/Home/test.vue'),
-      props: {
+      meta: {
         title: 'test',
       },
     },
   ],
-  props: {
+  meta: {
     order: 1,
     title: '主页',
     prependIcon: 'mdi-home',
