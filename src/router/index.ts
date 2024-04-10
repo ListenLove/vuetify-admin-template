@@ -1,6 +1,7 @@
 import { App } from 'vue'
 import { createRouter, createWebHashHistory } from 'vue-router'
 import { asyncRoutes, basicRoutes } from './routes'
+import setupRouterProgressGuard from './guards/nprogress'
 
 
 const router = createRouter({
@@ -11,6 +12,7 @@ const router = createRouter({
 
 export async function setupRouter(app: App) {
   await generateDynamicRoute()
+  setupRouterProgressGuard(router)
   app.use(router)
 }
 
